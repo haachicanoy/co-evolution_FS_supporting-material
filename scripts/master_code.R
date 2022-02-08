@@ -207,6 +207,44 @@ eco_fit <- mgcv::gam(Economic    ~ s(GDP), data = sfs_indx2)
 soc_fit <- mgcv::gam(Social      ~ s(GDP), data = sfs_indx2)
 fnt_fit <- stats::lm(Food_nutrition ~ log(GDP), data = sfs_indx2)
 
+dims <- c("Environment","Economic","Social","Food_nutrition")
+for(i in 1:4){
+  cat('Linear:',dims[i],'\n')
+  eval(expr = parse(text = paste0('fit <- stats::lm(',dims[i],' ~ poly(GDP,1), data = sfs_indx2)')))
+  eval(expr = parse(text = 'smm <- summary(fit)'))
+  eval(expr = parse(text = 'print(smm$adj.r.squared)'))
+  cat('\n')
+}
+for(i in 1:4){
+  cat('Quadratic:',dims[i],'\n')
+  eval(expr = parse(text = paste0('fit <- stats::lm(',dims[i],' ~ poly(GDP,2), data = sfs_indx2)')))
+  eval(expr = parse(text = 'smm <- summary(fit)'))
+  eval(expr = parse(text = 'print(smm$adj.r.squared)'))
+  cat('\n')
+}
+for(i in 1:4){
+  cat('Order 3:',dims[i],'\n')
+  eval(expr = parse(text = paste0('fit <- stats::lm(',dims[i],' ~ poly(GDP,3), data = sfs_indx2)')))
+  eval(expr = parse(text = 'smm <- summary(fit)'))
+  eval(expr = parse(text = 'print(smm$adj.r.squared)'))
+  cat('\n')
+}
+for(i in 1:4){
+  cat('Logarithm:',dims[i],'\n')
+  eval(expr = parse(text = paste0('fit <- stats::lm(',dims[i],' ~ log(GDP), data = sfs_indx2)')))
+  eval(expr = parse(text = 'smm <- summary(fit)'))
+  eval(expr = parse(text = 'print(smm$adj.r.squared)'))
+  cat('\n')
+}
+for(i in 1:4){
+  cat('GAM:',dims[i],'\n')
+  eval(expr = parse(text = paste0('fit <- mgcv::gam(',dims[i],' ~ s(GDP), data = sfs_indx2)')))
+  eval(expr = parse(text = 'smm <- summary(fit)'))
+  eval(expr = parse(text = 'print(smm$r.sq)'))
+  cat('\n')
+}
+rm(fit, smm, i)
+
 # Calculate the increase of GDP under SSP2 scenario
 gdp_chg <- sfs_indx2 %>%
   dplyr::select(GDP_chg_2050) %>%
