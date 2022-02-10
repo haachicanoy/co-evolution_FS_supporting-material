@@ -217,6 +217,7 @@ for(i in 1:4){
   eval(expr = parse(text = paste0('fit <- stats::lm(',dims[i],' ~ poly(GDP,1), data = sfs_indx2)')))
   eval(expr = parse(text = 'smm <- summary(fit)'))
   eval(expr = parse(text = 'print(smm$adj.r.squared)'))
+  # eval(expr = parse(text = 'print(smm)'))
   cat('\n')
 }
 for(i in 1:4){
@@ -224,6 +225,7 @@ for(i in 1:4){
   eval(expr = parse(text = paste0('fit <- stats::lm(',dims[i],' ~ poly(GDP,2), data = sfs_indx2)')))
   eval(expr = parse(text = 'smm <- summary(fit)'))
   eval(expr = parse(text = 'print(smm$adj.r.squared)'))
+  # eval(expr = parse(text = 'print(smm)'))
   cat('\n')
 }
 for(i in 1:4){
@@ -244,7 +246,8 @@ for(i in 1:4){
   cat('GAM:',dims[i],'\n')
   eval(expr = parse(text = paste0('fit <- mgcv::gam(',dims[i],' ~ s(GDP), data = sfs_indx2)')))
   eval(expr = parse(text = 'smm <- summary(fit)'))
-  eval(expr = parse(text = 'print(smm$r.sq)'))
+  # eval(expr = parse(text = 'print(smm$r.sq)'))
+  eval(expr = parse(text = 'print(smm)'))
   cat('\n')
 }
 rm(fit, smm, i)
